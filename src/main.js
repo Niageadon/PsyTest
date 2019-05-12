@@ -25,7 +25,12 @@ import {
   QInput,
   QScrollArea,
   QForm,
-  Notify
+  Notify,
+  QStepper,
+  QStep,
+  QSeparator,
+  QStepperNavigation
+
 
 } from 'quasar'
 
@@ -48,7 +53,10 @@ Vue.use(Quasar, {
     QInput,
     QScrollArea,
     QForm,
-
+    QStepper,
+    QStep,
+    QSeparator,
+    QStepperNavigation
   },
   directives: {
   },
