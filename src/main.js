@@ -29,7 +29,13 @@ import {
   QStepper,
   QStep,
   QSeparator,
-  QStepperNavigation
+  QStepperNavigation,
+  QCard,
+  QCardSection,
+  QCardActions,
+  QTabPanels,
+  QTabPanel,
+  QLinearProgress
 
 
 } from 'quasar'
@@ -56,7 +62,13 @@ Vue.use(Quasar, {
     QStepper,
     QStep,
     QSeparator,
-    QStepperNavigation
+    QStepperNavigation,
+    QCard,
+    QCardSection,
+    QCardActions,
+    QTabPanels,
+    QTabPanel,
+    QLinearProgress
   },
   directives: {
   },

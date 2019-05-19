@@ -8,6 +8,7 @@
 
      <router-view/>
     </q-page-container>
+    <h1>{{getWidth}}</h1>
   </q-layout>
 </template>
 
@@ -25,7 +26,23 @@ export default {
 
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      width: 0
+    }
+  },
+
+  computed:{
+    getWidth(){
+      if(document.body.clientWidth> 1000) {return 'f'}
+      else return 'ff'
+    },
+
+
+  },
+
+  watch:{
+    width(){
+      console.log(this.width)
     }
   }
 }

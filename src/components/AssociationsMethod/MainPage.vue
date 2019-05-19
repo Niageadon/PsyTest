@@ -1,62 +1,89 @@
 <template>
 <div>
   <div class="row justify-center" >
-    <q-form v-if="step === 11"
-      class="row justify-center q-gutter-xs"
-      @submit="nextStep">
-        <div class="column col-md-7 col-xs-12 self-start justify-center q-gutter-md">
-          <div class="row justify-center q-gutter-xs">
-            <q-input
-                :rules="[ val => val && val.length > 0 || 'Please type something']"
-                class="col-md-7 col-xs-10" filled v-model="answer.mainWord" label="Main word">
-            </q-input>
+    <q-card class="q-my-md col-md-8 cols-sm-12" v-if="currentStage === 0">
+      <q-form
+        class="row justify-center q-gutter-xs"
+        @submit="completeFirstStage">
+          <div class="column col-md-11 self-start justify-center q-gutter-md">
+            <div class=" row justify-center q-gutter-xs">
+              <q-input
+                  :rules="[ val => val && val.length > 0 || 'Please type something']"
+                  class="q-mt-lg col-md-7 col-xs-10" filled v-model="answer.mainWord" label="Main word">
+              </q-input>
+            </div>
+            <div class="row justify-around ">
+              <q-input
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || 'Please type something']"
+                  class="col-md-5 col-xs-10"
+                  v-for="(word, i) in firstStage" :key="i"  filled v-model="firstStage[i]">
+              </q-input>
+            </div>
+            <q-btn class="q-mb-md" label="Submit" type="submit" color="primary"></q-btn>
           </div>
-          <div class="row justify-center q-gutter-xs">
+      </q-form>
+    </q-card> <!-- Первый шаг: пишем главное слово и 16 ассоциаций к нему-->
+
+    <q-card class="q-mt-lg col-md-7 col-sm-12" v-if="currentStage === 1">
+      <q-form
+          @submit="completeSecondStage">
+        <q-linear-progress stripe style="height: 10px" :value="secondStepProgress"></q-linear-progress>
+        <q-tab-panels v-model="secondStageCounter" animated>
+          <q-tab-panel v-for="(step, i) in secondStage" :key="i" class="row wrap justify-around" :name="i">
+            <q-list class="col-md-5 col-sm-12" bordered separator >
+              <q-item clickable>
+                <q-item-label>{{answer.stepOneWord[+(i*2)]}}</q-item-label>
+              </q-item>
+              <q-item clickable>
+                <q-item-label>{{answer.stepOneWord[+(i*2)+1]}}</q-item-label>
+              </q-item>
+            </q-list>
             <q-input
                 lazy-rules
                 :rules="[ val => val && val.length > 0 || 'Please type something']"
-                class="col-md-5 col-xs-10"
-                v-for="(word, i) in answer.stepOneWord" :key="i"  filled v-model="answer.stepOneWord[i]">
+                class="col-md-5 col-sm-12" rounded outlined v-model="secondStage[i]" label="association">
             </q-input>
-          </div>
-          <q-btn label="Submit" type="submit" color="primary"></q-btn>
-        </div>
-    </q-form> <!-- Первый шаг: пишем главное слово и 16 ассоциаций к нему-->
+          </q-tab-panel>
 
-      <q-stepper class="col-md-7 q-mt-lg col-xs-12" v-model="step" ref="stepper" animated>
-        <q-step :name="1" title="Select campaign settings">
-          <div class="row q-gutter-md justify-center items-center">
-            <q-list class="col-5" bordered separator>
-              <q-item>
-                <q-item-section>{{secondStep.firstWord}}</q-item-section>
+        </q-tab-panels>
+        <q-card-actions>
+          <q-btn type="submit" flat>Next step</q-btn>
+        </q-card-actions>
+      </q-form>
+    </q-card> <!-- Второй этап: 8 ассоциаций к 16 полученным ранее словам -->
+
+    <q-card class="q-mt-lg col-md-7 col-sm-12" v-if="currentStage === 2">
+      <q-form
+          @submit="completeThirdStage">
+        <q-linear-progress stripe style="height: 10px" :value="thirdStageProgress"></q-linear-progress>
+        <q-tab-panels v-model="thirdStageCounter" animated>
+          <q-tab-panel v-for="(step, i) in thirdStage" :key="i" class="row wrap justify-around" :name="i">
+            <q-list class="col-md-5 col-sm-12" bordered separator >
+              <q-item clickable>
+                <q-item-label>{{answer.stepTwoWord[+(i*2)]}}</q-item-label>
               </q-item>
-              <q-item>
-                <q-item-section>{{secondStep.secondWord}}</q-item-section>
+              <q-item clickable>
+                <q-item-label>{{answer.stepTwoWord[+(i*2)+1]}}</q-item-label>
               </q-item>
             </q-list>
-
             <q-input
+                lazy-rules
                 :rules="[ val => val && val.length > 0 || 'Please type something']"
-                class="col 4" filled v-model="answer.mainWord" >
+                class="col-md-5 col-sm-12" rounded outlined v-model="thirdStage[i]" label="association">
             </q-input>
-          </div>
-        </q-step>
+          </q-tab-panel>
 
-        <template v-slot:navigation>
-          <q-stepper-navigation>
-            <q-btn @click="$refs.stepper.next()" color="primary" label="bbb"></q-btn>
-          </q-stepper-navigation>
-        </template>
-      </q-stepper>
+        </q-tab-panels>
+        <q-card-actions>
+          <q-btn type="submit" flat>Next step</q-btn>
+        </q-card-actions>
+      </q-form>
+    </q-card> <!-- Третий этап: 4 ассоциации к 8 полученным ранее словам -->
 
 
 
   </div>
-
-
-
-
-
 </div>
 </template>
 
@@ -68,56 +95,93 @@ export default {
   name: 'AssociationsMethod',
   data(){
     return{
-      step: 1,
+      currentStage: 2,
+      // расчет раздеелён на несколько этапов:
+      // 1 - ввод 16 ассоциаций,
+      // 2 - подбор 8 ассоциаций для слов первого этапа
+      // 3 - подбор 4 ассоциаций...
+      // 4 - подбор 2 ассоциаций...
+      // 5 - финальный этап
+      firstStage:{0:'', 1:'', 2:'', 3:'', 4:'', 5:'',6:'', 7:'', 8:'', 9:'', 10:'', 11:'', 12:'', 13:'', 14:'', 15:''},
+      secondStage:{0:'', 1:'', 2:'', 3:'', 4:'', 5:'',6:'', 7:''},
+      secondStageCounter: '0',
+      secondStageProgress: 0,
+
+      thirdStage:{0:'', 1:'', 2:'', 3:''},
+      thirdStageCounter: '0',
+      thirdStageProgress: 0,
+
+      fourthStage:{0:'', 1:''},
+      fourthStageCounter: '0',
+      fourthStageProgress: 0,
+
+      finalStage:{0:''},
 
       answer:{
         mainWord:'',
-        stepOneWord:  ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1',],//['','','','','','','','','','','','','','','','',],
+        stepOneWord:  ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16',],//['','','','','','','','','','','','','','','','',],
         stepTwoWord:  ['','','','','','','','',],
         stepThreeWord:['','','',''],
         stepFourWord: ['',''],
         resultWord: ''
       },
 
-      secondStep:{firstWord:'1', secondWord:'2', resultWord:''},
     }
   },
 
   methods: {
-    nextStep () {
-      this.step++;
-      switch (this.step) {
-        case 1: {this.secondStep.firstWord = this.stepOneWord[0]; this.secondStep.secondWord = this.stepOneWord[1]; break}
-        case 2: {
-          this.answer.stepTwoWord[0] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[2];
-          this.secondStep.secondWord = this.stepOneWord[3]; break}
-        case 3: {
-          this.answer.stepTwoWord[1] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[4];
-          this.secondStep.secondWord = this.stepOneWord[5]; break}
-        case 4: {
-          this.answer.stepTwoWord[2] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[6];
-          this.secondStep.secondWord = this.stepOneWord[7]; break}
-        case 5: {
-          this.answer.stepTwoWord[3] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[8];
-          this.secondStep.secondWord = this.stepOneWord[9]; break}
-        case 6: {
-          this.answer.stepTwoWord[4] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[10];
-          this.secondStep.secondWord = this.stepOneWord[11]; break}
-        case 7: {
-          this.answer.stepTwoWord[5] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[12];
-          this.secondStep.secondWord = this.stepOneWord[13]; break}
-        case 8: {
-          this.answer.stepTwoWord[6] = this.secondStep.resultWord;
-          this.secondStep.firstWord = this.stepOneWord[14];
-          this.secondStep.secondWord = this.stepOneWord[15]; break}
+    completeFirstStage(){
+      let array=[];
+      // добавляем в массив слова из первого шага
+
+      for(let i = 0; i < 16; i++){
+        array.push(this.firstStage[i])
+      }
+      // перетасовка элементов массива
+      array.sort(this.compareRandom);
+      this.answer.stepOneWord = array;
+      this.currentStage = 1;
+
+    },
+
+    completeSecondStage(){
+      this.secondStepProgress = this.secondStageCounter / 7 + 1/7;
+      this.secondStageCounter = + this.secondStageCounter + 1;
+      this.secondStageCounter = this.secondStageCounter.toString();
+
+      if(this.secondStageCounter==='8'){
+        let array = [];
+        for(let i = 0; i < 8; i++){
+          array.push(this.secondStage[i])
+        }
+        array.sort(this.compareRandom);
+        this.answer.stepTwoWord = array;
+        this.currentStage = 2;
       }
     },
+
+    completeThirdStage(){
+      this.thirdStepProgress = this.thirdStageCounter / 3 + 1/3;
+      this.thirdStageCounter = + this.thirdStageCounter + 1;
+      this.thirdStageCounter = this.thirdStageCounter.toString();
+
+      if(this.thirdStageCounter==='4'){
+        let array = [];
+        for(let i = 0; i < 4; i++){
+          array.push(this.thirdStage[i])
+        }
+        array.sort(this.compareRandom);
+        this.answer.stepThreeWord = array;
+        this.currentStage = 3;
+      }
+    },
+
+    compareRandom(a, b) {
+      // ф-я для случайной сортировки
+      return Math.random() - 0.5;
+    }
+
+
 
 
   }
