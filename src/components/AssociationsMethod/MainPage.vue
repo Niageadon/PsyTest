@@ -137,23 +137,48 @@
       </q-form>
     </q-card> <!-- Финальный этап этап: ассоциация к 2 полученным ранее словам -->
 
-    <q-card>
+    <div v-if="currentStage === 5" class="row justify-center col-11 q-mt-lg textCenter">
+      <div class="row justify-center col-12 q-col-gutter-sm ">
+         <q-input class="col-12 text-h4" color="cyan-12"  bg-color="deep-purple-13" rounded filled v-model="answer.mainWord" label="Main word"></q-input>
 
-    </q-card>
+        <div class=" row col-12">
+          <q-input outlined class="col" v-model="answer.stepOneWord[i-1]" bg-color="cyan-7" v-for="i in 8" :key="i"></q-input>
+        </div> <!--младший "байт" первого этапа-->
+
+        <div class=" row col-12">
+          <q-input outlined class="col" v-model="answer.stepOneWord[i+7]" bg-color="cyan-7" v-for="i in 8" :key="i"></q-input>
+        </div> <!--старший "байт" первого этапа-->
+
+        <div class=" row col-12">
+          <q-input outlined bg-color="green-6" class="col" v-model="answer.stepTwoWord[i-1]" v-for="i in 8" :key="i"></q-input>
+        </div>
+
+        <div class=" row col-12">
+          <q-input outlined bg-color="yellow-4" class="col" v-model="answer.stepThreeWord[i-1]" v-for="i in 4" :key="i"></q-input>
+        </div>
+
+        <div class=" row col-12">
+          <q-input outlined bg-color="orange-6" class="col" v-model="answer.stepFourWord[i-1]" v-for="i in 2" :key="i"></q-input>
+        </div>
+
+        <q-input class="col-12 text-h4" color="grey-10" bg-color="red-10"  filled v-model="answer.resultWord" label="Result word"></q-input>
+        <!--<div class="col-1" v-for="i in 8" :key="i">{{answer.stepOneWord[i+7]}}</div>-->
+      </div>
+
+    </div>
 
   </div>
 </div>
 </template>
 
-<style>
-</style>
+
 
 <script>
 export default {
   name: 'AssociationsMethod',
   data(){
     return{
-      currentStage: 3,
+      currentStage: 0,
       // расчет раздеелён на несколько этапов:
       // 1 - ввод 16 ассоциаций,
       // 2 - подбор 8 ассоциаций для слов первого этапа
@@ -177,9 +202,9 @@ export default {
 
       answer:{
         mainWord:'',
-        stepOneWord:  ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16',],//['','','','','','','','','','','','','','','','',],
-        stepTwoWord:  ['','','','','','','','',],
-        stepThreeWord:['','','',''],
+        stepOneWord:  ['','','','','','','','','','','','','','','','',],//['','','','','','','','','','','','','','','','',],
+        stepTwoWord:  ['1','2','3','4','5','6','7','8',],
+        stepThreeWord:['3','3','2','2'],
         stepFourWord: ['1','2'],
         resultWord: ''
       },
@@ -252,7 +277,8 @@ export default {
 
     completeFinalStage(){
         this.answer.resultWord = this.finalStage[0];
-        console.log(this.answer)
+        console.log(this.answer);
+      this.currentStage = 5;
     },
 
 
@@ -268,3 +294,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .textCenter{
+    text-align: center;
+  }
+</style>
