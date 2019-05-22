@@ -1,17 +1,15 @@
 <template>
 <div>
   <div class="row justify-center">
-    <q-card class="q-my-md col-md-8 cols-sm-12" v-if="currentStage === 0">
+    <q-card class="q-mt-md-xl q-mt-xs-none col-md-8 cols-sm-12" v-if="currentStage === 0">
       <q-form
         class="row justify-center q-gutter-xs"
         @submit="completeFirstStage">
-          <div class="column col-md-11 self-start justify-center q-gutter-md">
-            <div class=" row justify-center q-gutter-xs">
-              <q-input
-                  :rules="[ val => val && val.length > 0 || 'Please type something']"
-                  class="q-mt-lg col-md-7 col-xs-10" filled v-model="answer.mainWord" label="Main word">
-              </q-input>
-            </div>
+        <div class="row col-md-11 self-start justify-center q-gutter-md">
+            <q-input
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+                class="q-mt-lg q-pt-lg col-md-7 col-xs-10 text-h6" filled v-model="answer.mainWord" label="Main word">
+            </q-input>
             <div class="row justify-around ">
               <q-input
                   lazy-rules
@@ -20,7 +18,7 @@
                   v-for="(word, i) in firstStage" :key="i"  filled v-model="firstStage[i]">
               </q-input>
             </div>
-            <q-btn class="q-mb-md" label="Submit" type="submit" color="primary"></q-btn>
+            <q-btn class="col-11 q-mb-md" label="Submit" type="submit" color="primary"></q-btn>
           </div>
       </q-form>
     </q-card> <!-- Первый шаг: пишем главное слово и 16 ассоциаций к нему-->
@@ -276,7 +274,7 @@ export default {
     },
 
     completeFinalStage(){
-        this.answer.resultWord = this.finalStage[0];
+        this.answer.resultWord = this.finalStage;
         console.log(this.answer);
       this.currentStage = 5;
     },

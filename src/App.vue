@@ -1,5 +1,23 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout  view="lHh Lpr lFf">
+  <Toolbar></Toolbar>
+<!--    <q-header elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="drawer = !drawer"></q-btn>
+
+        <q-toolbar-title>
+
+          Title
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>-->
+
+    <q-drawer v-model="drawer" side="left" bordered>
+      <!-- drawer content -->
+    </q-drawer>
+
+
+
 
 
 
@@ -13,15 +31,15 @@
 </template>
 
 <script>
-import HelloWorld from './components/AssociationsMethod/MainPage.vue'
-import test from './components/Test.vue'
+import Toolbar from './components/System/Toolbar'
+import Drawer from './components/System/Drawer'
 
 export default {
   name: 'LayoutDefault',
 
   components: {
-    HelloWorld,
-    test
+    Toolbar,
+    Drawer
   },
 
   data () {
