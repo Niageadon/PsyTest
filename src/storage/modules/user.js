@@ -1,6 +1,6 @@
-//import  * as fireBase from 'firebase/app'
-//import {try} from "q";
+import  * as fireBase from 'firebase/app'
 
+;
 class User {
   constructor(id){
     this.id = id
@@ -9,12 +9,13 @@ class User {
 
 export default {
   state: {
+    localStorageData: {},
     user: null,
     userName: null,
     loadingUserInfo: false,
     success: false,  //успешный логин или регистрация
     errorMessage: '',
-
+    loggedIn: false,
   },
 
   getters: {
@@ -37,6 +38,7 @@ export default {
     isUserAuthorized: state =>{
       return state.user !== null
     },
+
 
 
   },
@@ -70,30 +72,17 @@ export default {
       commit('setError', '');
       commit('setSuccess', false);
 
-      /*fireBase.auth().createUserWithEmailAndPassword(email, password)
-        .then (user =>{
-          console.log(user);
-          console.log('hey');
-          commit('setLoading', false);
-          commit('setUser', new User(user.user.uid));
-          commit('setSuccess', true);
-        })
-        .catch (error =>{
-          console.log(error);
-          commit('setLoading', false);
-          commit('setError', error.message);
-
-        })*/
         try {
           const user = await fireBase.auth().createUserWithEmailAndPassword(email, password);
           commit('setUser', new User(user.uid));
-          commit('setUserName', user.email)
+          commit('setUserName', user.email);
           commit('setSuccess', true);
         }
         catch(error){
           commit('setLoading', false);
           commit('setError', error.message);
-          //throw error
+          //console.log(error)
+          throw error
         }
         finally {
           commit('setLoading', false);
@@ -120,16 +109,8 @@ export default {
       }
     },
 
-    clearError({commit}){
-      commit('setError', '')
-    },
-
-    doneAuthentication({commit}){
-      commit('setSuccess', false)
-    },
-
     async logout({commit}){
-      await fireBase.auth().signOut()
+      await fireBase.auth().signOut();
       setTimeout(() =>{
         commit('setUser', null);
         commit('setUserName', null)

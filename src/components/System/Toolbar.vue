@@ -1,19 +1,22 @@
 <template>
   <div>
-    <q-header elevated class="bg-primary text-white">
+    <q-header  reveal bordered class="bg-deep-purple-10 text-white">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="left = !left" />
+        <q-btn  dense flat round icon="menu" @click="drawer = !drawer"></q-btn>
 
         <q-toolbar-title>
-
-          Title
+          <q-btn flat to="/AssociationsMethod"><q-icon  name="home"></q-icon></q-btn>
+          Boba app
         </q-toolbar-title>
+      <q-btn v-if="!isUserAuthorized" class="" to="/Authentication">Login</q-btn>
+      <q-btn v-else class="" @click="logout" >Logout</q-btn>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="left" side="left" bordered>
+    <q-drawer v-model="drawer" side="left" overlay elevated>
       <!-- drawer content -->
     </q-drawer>
+
   </div>
 </template>
 
@@ -27,8 +30,15 @@
     },
 
     methods:{
-      setDrawer(){
-        this.$store.dispatch('setDrawer');
+    logout(){
+      this.$store.dispatch('logout');
+    }
+
+    },
+
+    computed:{
+      isUserAuthorized(){
+        return this.$store.getters.isUserAuthorized;
       }
     }
   }
