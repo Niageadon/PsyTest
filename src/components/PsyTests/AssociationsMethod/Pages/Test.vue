@@ -318,6 +318,7 @@
         let month = currentDate.getMonth() + 1;
         month = (month.toString().length === 1)? '0' + month : month;
         this.answer.time.currentDate = (year + '-' + month + '-' + day );
+        console.log(this.answer.time.currentDate)
         //return(year + '-' + month + '-' + day )
       },
 
@@ -325,7 +326,7 @@
 
     },
 
-    mounter(){
+    mounted(){
       this.getCurrentDate();
     }
   }

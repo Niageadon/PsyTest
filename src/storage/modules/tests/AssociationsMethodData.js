@@ -46,7 +46,7 @@ export default {
       {
         //console.log(newRecord)
         await fb.collection("root").doc('users').collection(userID).doc('userData')
-          .collection('AssociationsMethod').doc('1').set(payload);
+          .collection('AssociationsMethod').doc().set(payload);
 
       }
       catch (e) {
@@ -59,5 +59,38 @@ export default {
       //commit('setWriteDone', false);
 
     },
+
+    async getAMRecords({commit}){
+      //commit('setLoading', true);
+      let userID = userState.state.user;
+      let records = {note:{}, task:{}, reminder:{}, med:{}};
+      const FB = fireBase.firestore().collection('root').doc('users').collection(userID)
+        .doc('userData').collection('AssociationsMethod');//.doc().collection('2019-04-19')//.doc('data');
+
+
+      try{
+        // Получаем данные с FB
+        const note      = await FB.get();
+
+        // Заполняем объект данными
+        // Загрузка идёт с конца, для упрощения последующей сортировки
+        const arrNote  = note.docs.map(doc => ({/*__id: doc.id, */...doc.data()}));
+        for(let i = arrNote.length - 1; i > -1; i--) {
+          records.note[arrNote[i].date] = arrNote[i]
+        }
+
+        console.log(arrNote)
+        //commit('setRecordsArray', records);
+        commit('setLoading', false);
+
+        //commit
+
+      }
+      catch (e) {
+        commit('setLoading', false);
+        throw e;
+        //console.log(e)
+      }
+    }
   }
 }
