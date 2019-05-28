@@ -143,7 +143,7 @@
 
     <div>sec{{time.second}}</div>
     <div>sec{{time.mSecond}}</div>
-
+<q-btn @click="getTimeInterval">ff</q-btn>
   </div>
 </template>
 
@@ -157,7 +157,7 @@
     },
     data(){
       return{
-        time: {second: 0, mSecond: 0},
+        time: {firstPoint: 0, secondPoint: 0},
         timerIsWork: false,
         currentStage: 0,
         // расчет раздеелён на несколько этапов:
@@ -217,10 +217,9 @@
         this.secondStageCounter = + this.secondStageCounter + 1;
         this.secondStageCounter = this.secondStageCounter.toString();
         // таймер
-        const second = this.time.second;
-        const mSecond = this.time.mSecond;
-        this.answer.time.stepTwo.push({second, mSecond});
-        this.refreshTimer();
+        const mSecond = this.getTimeInterval();
+        this.answer.time.stepTwo.push(mSecond);
+
 
         if(this.secondStageCounter==='8'){
           let array = [];
@@ -238,10 +237,9 @@
         this.thirdStageCounter = + this.thirdStageCounter + 1;
         this.thirdStageCounter = this.thirdStageCounter.toString();
         // таймер
-        const second = this.time.second;
-        const mSecond = this.time.mSecond;
-        this.answer.time.stepThree.push({second, mSecond});
-        this.refreshTimer();
+        const mSecond = this.getTimeInterval();
+        this.answer.time.stepThree.push(mSecond);
+
 
         if(this.thirdStageCounter==='4'){
           let array = [];
@@ -259,10 +257,10 @@
         this.fourthStageCounter = + this.fourthStageCounter + 1;
         this.fourthStageCounter = this.fourthStageCounter.toString();
         // таймер
-        const second = this.time.second;
-        const mSecond = this.time.mSecond;
-        this.answer.time.stepFour.push({second, mSecond});
-        this.refreshTimer();
+
+        const mSecond = this.getTimeInterval();
+        this.answer.time.stepFour.push(mSecond);
+
 
         if(this.fourthStageCounter==='2'){
           let array = [];
@@ -277,11 +275,8 @@
 
       completeFinalStage(){
         // таймер
-        const second = this.time.second;
-        const mSecond = this.time.mSecond;
-        this.answer.time.resultStep = {second, mSecond};
-        this.refreshTimer();
-        this.timerIsWork = false;
+        this.answer.time.resultStep = this.getTimeInterval();
+
 
         this.answer.resultWord = this.finalStage;
         localStorage.setItem('TestData', JSON.stringify(this.answer));
@@ -291,12 +286,17 @@
       },
 
       getTimeInterval(){
-        let timerId = setInterval(() =>{
-          if (!this.timerIsWork) {clearTimeout(timerId)}
-          this.time.mSecond += 200;
-          if (this.time.mSecond === 1000){this.time.second++; this.time.mSecond = 0;}
-        }, 200);
-
+        if(this.time.firstPoint === 0) {
+          //set value first time
+          this.time.firstPoint = new Date().getTime();
+          console.log(this.time.firstPoint)
+        }
+        else {
+          this.time.secondPoint = new Date().getTime();
+          const ret = this.time.secondPoint - this.time.firstPoint;
+          this.time.firstPoint = this.time.secondPoint;
+          return ret
+        }
       },
 
       refreshTimer(){
