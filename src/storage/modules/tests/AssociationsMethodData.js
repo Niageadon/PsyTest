@@ -16,7 +16,9 @@ export default {
   },
 
   mutations: {
-
+    setAMHistory(state, payload){
+      state.amHistory = payload;
+    }
   },
 
 
@@ -80,10 +82,9 @@ export default {
         }
 
         console.log(arrNote)
+        commit('setAMHistory', arrNote);
         //commit('setRecordsArray', records);
         commit('setLoading', false);
-
-        //commit
 
       }
       catch (e) {

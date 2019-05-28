@@ -189,7 +189,7 @@
           stepThreeWord:['','','',''],
           stepFourWord: ['',''],
           resultWord: '',
-          time: {stepTwo:[], stepThree:[], stepFour:[], resultStep: {}, currentDate: ''}
+          time: {stepTwo:[], stepThree:[], stepFour:[], resultStep: {}, Date: ''}
         },
 
       }
@@ -299,11 +299,6 @@
         }
       },
 
-      refreshTimer(){
-        this.time.second = 0;
-        this.time.mSecond = 0;
-      },
-
       compareRandom() {
         // ф-я для случайной сортировки
         return Math.random() - 0.5;
@@ -311,14 +306,14 @@
 
       getCurrentDate(){
         // auto select current date
-        let currentDate = new Date;
-        let year = currentDate.getFullYear();
-        let day = currentDate.getDate();
+        let date = new Date;
+        let year = date.getFullYear();
+        let day = date.getDate();
         day = (day.toString().length === 1)? '0' + day : day;
-        let month = currentDate.getMonth() + 1;
+        let month = date.getMonth() + 1;
         month = (month.toString().length === 1)? '0' + month : month;
-        this.answer.time.currentDate = (year + '-' + month + '-' + day );
-        console.log(this.answer.time.currentDate)
+        this.answer.time.Date = (year + '-' + month + '-' + day );
+        console.log(this.answer.time.Date)
         //return(year + '-' + month + '-' + day )
       },
 
