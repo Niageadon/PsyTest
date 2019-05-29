@@ -13,6 +13,7 @@ import fbConfig from './assets/firebaseConfig'
 
 fireBase.initializeApp(fbConfig);
 Vue.use(VueRouter);
+
 import {
   Quasar,
   QLayout,
@@ -42,7 +43,8 @@ import {
   QTabPanels,
   QTabPanel,
   QLinearProgress,
-  Dialog
+  Dialog,
+  QDialog,
 
 
 } from 'quasar'
@@ -77,6 +79,7 @@ Vue.use(Quasar, {
     QTabPanels,
     QTabPanel,
     QLinearProgress,
+    QDialog,
   },
   directives: {
   },

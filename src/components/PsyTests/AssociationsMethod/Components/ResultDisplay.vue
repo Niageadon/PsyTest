@@ -12,20 +12,20 @@
         </div>
       </div>
 
-      <div class=" row col-12">
-        <q-input outlined bg-color="yellow-4" class="col" v-model="answer.stepTwoWord[i-1]" v-for="i in 8" :key="i"></q-input>
-      </div>
+       <div class=" row col-12">
+         <q-input outlined bg-color="yellow-4" class="col" v-model="answer.stepTwoWord[i-1]" v-for="i in 8" :key="i"></q-input>
+       </div>
 
-      <div class=" row col-12">
-        <q-input outlined bg-color="light-green" class="col" v-model="answer.stepThreeWord[i-1]" v-for="i in 4" :key="i"></q-input>
-      </div>
+     <div class=" row col-12">
+       <q-input outlined bg-color="light-green" class="col" v-model="answer.stepThreeWord[i-1]" v-for="i in 4" :key="i"></q-input>
+     </div>
 
-      <div class=" row col-12">
-        <q-input outlined bg-color="cyan-7" class="col" v-model="answer.stepFourWord[i-1]" v-for="i in 2" :key="i"></q-input>
-      </div>
+     <div class=" row col-12">
+       <q-input outlined bg-color="cyan-7" class="col" v-model="answer.stepFourWord[i-1]" v-for="i in 2" :key="i"></q-input>
+     </div>
 
-      <q-input class="col-12 text-h4" color="grey-10" bg-color="deep-purple-13"  filled v-model="answer.resultWord" label="Result word"></q-input>
-      <!--<div class="col-1" v-for="i in 8" :key="i">{{answer.stepOneWord[i+7]}}</div>-->
+     <q-input class="col-12 text-h4" color="grey-10" bg-color="deep-purple-13"  filled v-model="answer.resultWord" label="Result word"></q-input>
+
     </div>
   </div>
 </template>
@@ -37,11 +37,11 @@
       answer:{
         default: {
         mainWord:'',
-        stepOneWord:  ['','','','','','','','','','','','','','','','',],
-        stepTwoWord:  ['','','','','','','','',],
-        stepThreeWord:['','','',''],
-        stepFourWord: ['',''],
-        resultWord: ''
+          stepOneWord:  ['','','','','','','','','','','','','','','','',],
+          stepTwoWord:  ['','','','','','','','',],
+          stepThreeWord:['','','',''],
+          stepFourWord: ['',''],
+          resultWord: ''
         },
       }
       },
