@@ -11,6 +11,7 @@ import '@quasar/extras/material-icons/material-icons.css'
 import VueRouter from 'vue-router'
 import fbConfig from './assets/firebaseConfig'
 
+
 fireBase.initializeApp(fbConfig);
 Vue.use(VueRouter);
 
