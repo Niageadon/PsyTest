@@ -2,17 +2,8 @@
   <div id="charts">
     <div id="chart1">
       <apexchart
-          type="line"
-          height="230"
-          :options="chartOptionsArea"
-          :series="series"
-      />
-    </div>
-    <div id="chart2">
-      <apexchart
-          type="area"
-          height="130"
-          :options="chartOptionsBrush"
+          type='bar'
+          :options="chartOptions"
           :series="series"
       />
     </div>
@@ -30,74 +21,108 @@
     name: "Histogramm",
     data: function() {
       return {
-        series: [
-          {
-            data: this.generateDayWiseTimeSeries(
-              new Date("11 Feb 2017").getTime(),
-              185,
-              {
-                min: 30,
-                max: 90
-              }
-            )
-          }
-        ],
-        chartOptionsArea: {
+        series: [{
+         /* name: 'Inflation',
+          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]*/
+          data: [{
+            x: 'Apple',
+            y: 54,
+            z: 'fff'
+          }, {
+            x: 'Orange',
+            y: 66
+          }],
+        }],
+        chartOptions: {
           chart: {
-            id: "chartArea",
-            toolbar: {
-              autoSelected: "pan",
-              show: false
+            height: 350,
+            type: 'bar',
+          },
+/*          plotOptions: {
+            bar: {
+              dataLabels: {
+                position: 'top', // top, center, bottom
+              },
             }
-          },
-          colors: ["#546E7A"],
-          stroke: {
-            width: 3
-          },
+          },*/
           dataLabels: {
-            enabled: false
-          },
-          fill: {
-            opacity: 1
-          },
-          markers: {
-            size: 0
-          },
-          xaxis: {
-            type: "datetime"
-          }
-        },
-        chartOptionsBrush: {
-          chart: {
-            id: "chartBrush",
-            brush: {
-              target: "chartArea",
-              enabled: true
+            enabled: true,
+            formatter: function (val) {
+              return val + "%";
             },
-            selection: {
-              enabled: true,
-              xaxis: {
-                min: new Date("19 Jun 2017").getTime(),
-                max: new Date("14 Aug 2017").getTime()
-              }
+            offsetY: -20,
+            style: {
+              fontSize: '12px',
+              colors: ["#304758"]
             }
           },
-          colors: ["#008FFB"],
+
+          xaxis: {/*
+            categories: ["Second step", "Third step", "Fourth step", "Final step"],*/
+            position: 'top',
+            labels: {
+              offsetY: -18,
+
+            },
+            axisBorder: {
+              show: false
+            },
+            axisTicks: {
+              show: false
+            },
+            crosshairs: {
+              fill: {
+                type: 'gradient',
+                gradient: {
+                  colorFrom: '#D8E3F0',
+                  colorTo: '#BED1E6',
+                  stops: [0, 100],
+                  opacityFrom: 0.4,
+                  opacityTo: 0.5,
+                }
+              }
+            },
+            tooltip: {
+              enabled: true,
+              offsetY: -35,
+
+            }
+          },
           fill: {
             gradient: {
-              enabled: true,
-              opacityFrom: 0.91,
-              opacityTo: 0.1
-            }
-          },
-          xaxis: {
-            type: "datetime",
-            tooltip: {
-              enabled: false
-            }
+              shade: 'light',
+              type: "horizontal",
+              shadeIntensity: 0.25,
+              gradientToColors: undefined,
+              inverseColors: true,
+              opacityFrom: 1,
+              opacityTo: 1,
+              stops: [50, 0, 100, 100]
+            },
           },
           yaxis: {
-            tickAmount: 2
+            axisBorder: {
+              show: false
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              show: false,
+              formatter: function (val) {
+                return val + "%";
+              }
+            }
+
+          },
+          title: {
+            text: 'Monthly Inflation in Argentina, 2002',
+            floating: true,
+            offsetY: 370,
+            align: 'center',
+            style: {
+              color: '#444'
+            }
           }
         }
       };
