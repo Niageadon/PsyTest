@@ -1,6 +1,6 @@
 <template>
   <div id="charts">
-    <div id="chart1">
+    <div class="text-black" id="chart1">
       <apexchart
           type='bar'
           :options="chartOptions"
@@ -19,20 +19,19 @@
 
   export default {
     name: "Histogramm",
+
+    props: {
+     inputArray: {
+       type: Array,
+       required: true,
+       default: function(){
+       return [{x: 'f', y: 1, z: 'q'}]
+       }
+     },
+    },
+
     data: function() {
       return {
-        series: [{
-         /* name: 'Inflation',
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]*/
-          data: [{
-            x: 'Apple',
-            y: 54,
-            z: 'fff'
-          }, {
-            x: 'Orange',
-            y: 66
-          }],
-        }],
         chartOptions: {
           chart: {
             height: 350,
@@ -48,7 +47,7 @@
           dataLabels: {
             enabled: true,
             formatter: function (val) {
-              return val + "%";
+              return val + "s";
             },
             offsetY: -20,
             style: {
@@ -110,41 +109,36 @@
             labels: {
               show: false,
               formatter: function (val) {
-                return val + "%";
+                return val + " s";
               }
             }
 
           },
-          title: {
-            text: 'Monthly Inflation in Argentina, 2002',
-            floating: true,
-            offsetY: 370,
-            align: 'center',
-            style: {
-              color: '#444'
-            }
-          }
+
         }
-      };
+      }
     },
 
     methods: {
-      generateDayWiseTimeSeries: function(baseval, count, yrange) {
-        var i = 0;
-        var series = [];
-        while (i < count) {
-          var x = baseval;
-          var y =
-            Math.floor(Math.random() * (yrange.max - yrange.min + 1)) +
-            yrange.min;
 
-          series.push([x, y]);
-          baseval += 86400000;
-          i++;
+    },
+
+    computed:{
+      series(){
+        console.log('in', this.inputArray)
+        if(this.inputArray) {
+          let arr = [];
+          arr[0] = {};
+          arr[0].data = this.inputArray;
+          //console.log('hey',arr)
+          return arr
         }
 
-        return series;
+        return 0
       }
+    },
+
+    mounted(){
     }
   };
 </script>
@@ -152,7 +146,7 @@
 <style scoped>
   #chart1,
   #chart2 {
-    max-width: 650px;
+    max-width: 90%;
     margin: 35px auto;
   }
 
