@@ -23,15 +23,20 @@
 
     <q-dialog
         v-model="dialog"
-
         persistent
         transition-show="slide-up"
         transition-hide="slide-down"
     >
       <q-card style="min-width: 90%" class="row justify-center">
 
-        <resultDisplay v-bind:answer="selectedRecord"></resultDisplay>
-        <histogramm class="col-12" v-if="this.selectedRecord.resultWord" :input-array="setDataForHistogramm"> </histogramm>
+        <resultDisplay class="col-11" v-bind:answer="selectedRecord"></resultDisplay>
+
+        <histogramm class="col-11" v-if="this.selectedRecord.resultWord" :input-array="setDataForHistogramm"> </histogramm>
+
+        <q-separator class="col-12"></q-separator>
+        <q-card-actions>
+          <q-btn @click="dialog = false" flat>Close</q-btn>
+        </q-card-actions>
       </q-card>
     </q-dialog>
 
@@ -117,7 +122,7 @@
             data.push(obj);
           }
           let obj = {};
-          obj.x = 'result word';
+          obj.x = 'result';
           obj.y = (this.selectedRecord.time.resultStep/1000).toFixed(2);
           obj.z = '' + this.selectedRecord.stepFourWord[0] + ' + ' +
             this.selectedRecord.stepFourWord[1] + ' = ' + this.selectedRecord.resultWord;

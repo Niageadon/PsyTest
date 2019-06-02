@@ -141,9 +141,6 @@
     </div>
 
 
-    <div>sec{{time.second}}</div>
-    <div>sec{{time.mSecond}}</div>
-<q-btn @click="getTimeInterval">ff</q-btn>
   </div>
 </template>
 
@@ -289,7 +286,6 @@
         if(this.time.firstPoint === 0) {
           //set value first time
           this.time.firstPoint = new Date().getTime();
-          console.log(this.time.firstPoint)
         }
         else {
           this.time.secondPoint = new Date().getTime();

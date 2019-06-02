@@ -125,12 +125,10 @@
 
     computed:{
       series(){
-        console.log('in', this.inputArray)
         if(this.inputArray) {
           let arr = [];
           arr[0] = {};
           arr[0].data = this.inputArray;
-          //console.log('hey',arr)
           return arr
         }
 
@@ -146,7 +144,7 @@
 <style scoped>
   #chart1,
   #chart2 {
-    max-width: 90%;
+    max-width: 100%;
     margin: 35px auto;
   }
 

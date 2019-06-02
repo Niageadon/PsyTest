@@ -5,7 +5,7 @@
 
       <div class=" row col-12">
         <div class="row col">
-          <div class="col column" v-for="i in 8" :key="i">
+          <div class=" text-center col column" v-for="i in 8" :key="i">
             <q-input outlined class="col" v-model="answer.stepOneWord[2*(i-1)]" bg-color="orange-6"></q-input>
             <q-input outlined class="col" v-model="answer.stepOneWord[i+(i-1)]" bg-color="orange-6"></q-input>
           </div>
