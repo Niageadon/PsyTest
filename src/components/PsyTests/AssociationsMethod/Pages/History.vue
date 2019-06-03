@@ -7,7 +7,7 @@
 
       <q-input :dense="true" class="col-md-8 col-xs-11 q-my-lg text-h5">Filter</q-input>
 
-      <q-card style="cursor: pointer" @click="showRecord(i)" v-for="(i, index) in arrData" :key="index" dark bordered class="card q-ma-xs bg-grey-9 my-card col-md-5 col-xs-11">
+      <q-card style="cursor: pointer" @click="showRecord(i)" v-for="(i, index) in arrData" :key="index" dark bordered class="card q-ma-xs bg-grey-9 my-card col-md-4 col-xs-11">
         <q-card-section>
           <div class="text-h6">Main word: {{i.mainWord}}</div>
           <div class="text-h7">Result word: {{i.resultWord}}</div>
@@ -74,8 +74,16 @@
 
     methods:{
     getHistoryData(){
-      let delay = this.$store.getters.USER? 1: 2000;
-      setTimeout(() =>{this.$store.dispatch('getAMRecords')}, delay);
+      let userData = false;
+      //setTimeout(() =>{this.$store.dispatch('getAMRecords').catch(e=>{console.log(e)})}, delay)
+      let getData = setInterval(() =>{
+        if(this.$store.getters.USER) {
+          userData = true}
+        if(userData) {
+          this.$store.dispatch('getAMRecords');
+          clearInterval(getData);
+        }
+      }, 500)
     },
 
       showRecord(record){

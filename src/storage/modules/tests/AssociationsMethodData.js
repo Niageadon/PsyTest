@@ -81,7 +81,6 @@ export default {
           records.note[arrNote[i].date] = arrNote[i]
         }
 
-        console.log(arrNote)
         commit('setAMHistory', arrNote);
         //commit('setRecordsArray', records);
         commit('setLoading', false);
