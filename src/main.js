@@ -46,7 +46,7 @@ import {
   QLinearProgress,
   Dialog,
   QDialog,
-
+  QImg,
 
 } from 'quasar'
 
@@ -81,6 +81,7 @@ Vue.use(Quasar, {
     QTabPanel,
     QLinearProgress,
     QDialog,
+    QImg,
   },
   directives: {
   },
