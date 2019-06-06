@@ -47,6 +47,8 @@ import {
   Dialog,
   QDialog,
   QImg,
+  QSelect,
+  QSpace
 
 } from 'quasar'
 
@@ -82,6 +84,8 @@ Vue.use(Quasar, {
     QLinearProgress,
     QDialog,
     QImg,
+    QSelect,
+    QSpace
   },
   directives: {
   },
