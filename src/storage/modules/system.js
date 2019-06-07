@@ -2,7 +2,6 @@ export default {
   state: {
     drawer: false,
     systemLoading: false,
-
   },
 
   mutations: {
@@ -24,7 +23,7 @@ export default {
 
   actions: {
     setDrawer(state){
-      state.commit('toggleDrawer')
+      state.commit('toggleDrawer');
     }
   }
 }

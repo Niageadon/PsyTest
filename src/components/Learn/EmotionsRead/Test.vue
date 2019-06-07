@@ -37,9 +37,7 @@
         tab: '0',
 
         emotion: '',
-        options: [
-          'Радость', 'Удивление', 'Печаль', 'Гнев', 'Отвращение', 'Презрение', 'Страх'
-        ],
+        options: ['Радость', 'Удивление', 'Печаль', 'Гнев', 'Отвращение', 'Презрение', 'Страх'],
         url: 'https://placeimg.com/500/300/nature',
         man1: 'https://drive.google.com/uc?id=1q2AVfJAy_hrb8hoz1COovhF7igC2CiFo',
         man: 'https://pp.userapi.com/c840429/v840429309/24b79/C-j6ibA9-mY.jpg',

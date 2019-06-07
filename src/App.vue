@@ -51,7 +51,7 @@ export default {
 
   beforeMount(){
     if(localStorage.TestData){
-      let data = JSON.parse(localStorage.getItem('TestData'));
+      //let data = JSON.parse(localStorage.getItem('TestData'));
       //this.$store.dispatch('setAssociationsMethod', data);
     }
   }

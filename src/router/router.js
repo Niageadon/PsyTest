@@ -6,6 +6,7 @@ import AssociationsMethodHistory from '../components/PsyTests/AssociationsMethod
 import Authentication from '../components/System/Authentication'
 import EmotionsReadStartPage from '../components/Learn/EmotionsRead/MainPage'
 import EmotionsReadTest from '../components/Learn/EmotionsRead/Test'
+import EmotionsReadNewRecord from '../components/Learn/EmotionsRead/pages/admin'
 
 
 Vue.use(Router);
@@ -29,6 +30,7 @@ export default new Router({
 
     {path: '/EmotionsRead', component: EmotionsReadStartPage},
     {path: '/EmotionsRead/test', component: EmotionsReadTest},
+    {path: '/EmotionsRead/new', component: EmotionsReadNewRecord},
 
 
   ]
