@@ -7,11 +7,11 @@ import ar from "quasar/lang/ar";
 export default {
   namespaced: true,
   state: {
-  records: [{a:'d'}],
+  records: [],
   },
 
   getters: {
-  RECORD(state){
+  RECORDSS(state){
     return state.records;
   }
   },
@@ -26,21 +26,7 @@ export default {
 
   actions: {
     async NewRERecord({state, commit}, payload){
-      /////////////////////////////////////////////
-      // Проверяем наличие записи с текущей датой, делая запрос на сервер
-      //    | если нету, то заполняем данные и загружаем на сервер
-      //    | есть есть, то выгружаем имеющиеся данные, редактируем их и отправвляем на сервер обновлённую версию
-      /////////////////////////////////////////////
       const fb = fireBase.firestore();
-      //commit('setWriteDone', true);               //забираем данные из текстового редактора
-      //let newRecord = {date:'2019-04-01'};
-      // check for date duplicate
-
-        /* await fb.collection('users').doc(userID).collection('records').doc('data')
-          .collection(recordType).doc(newRecord.date).get()*/
-
-
-
       try
       {
         //console.log(newRecord)
@@ -52,10 +38,6 @@ export default {
       }
 
 
-
-
-      //commit('setWriteDone', false);
-
     },
 
     async getRERecords({commit}){
@@ -66,14 +48,10 @@ export default {
 
 
       try{
-        // Получаем данные с FB
         const note      = await FB.get();
 
-        // Заполняем объект данными
-        // Загрузка идёт с конца, для упрощения последующей сортировки
         const arrNote  = note.docs.map(doc => ({/*__id: doc.id, */...doc.data()}));
         commit('setRecord', arrNote);
-        console.log(1, arrNote);
         for(let i = arrNote.length - 1; i > -1; i--) {
           //records.note[arrNote[i].date] = arrNote[i]
         }

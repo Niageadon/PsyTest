@@ -48,7 +48,8 @@ import {
   QDialog,
   QImg,
   QSelect,
-  QSpace
+  QSpace,
+  QToggle
 
 } from 'quasar'
 
@@ -85,7 +86,8 @@ Vue.use(Quasar, {
     QDialog,
     QImg,
     QSelect,
-    QSpace
+    QSpace,
+    QToggle
   },
   directives: {
   },
