@@ -18,6 +18,20 @@ export default {
   mutations: {
     setAMHistory(state, payload){
       state.amHistory = payload;
+    },
+
+    sortRecords(state, payload) {
+      state.amHistory = state.amHistory.sort((a,b)=>{
+        let pos = {a:0, b:0};
+        pos.a = a.mainWord.toLowerCase().indexOf(payload.toLowerCase());
+        pos.b = b.mainWord.toLowerCase().indexOf(payload.toLowerCase());
+        let answer;
+        if(pos.a === pos.b){answer = 0;}
+        if(pos.a > pos.b){answer = -1;}
+        else {answer = 1;}
+
+        return answer;
+      })
     }
   },
 
@@ -91,6 +105,10 @@ export default {
         throw e;
         //console.log(e)
       }
+    },
+
+    sortRecords({commit},payload){
+      commit('sortRecords', payload)
     }
   }
 }

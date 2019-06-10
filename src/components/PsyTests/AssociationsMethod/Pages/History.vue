@@ -5,9 +5,9 @@
     <div class="row justify-center">
 
 
-      <q-input :dense="true" class="col-md-8 col-xs-11 q-my-lg text-h5">Filter</q-input>
-
-      <q-card style="cursor: pointer" @click="showRecord(i)" v-for="(i, index) in arrData" :key="index" dark bordered class="card q-ma-xs bg-grey-9 my-card col-md-4 col-xs-11">
+      <q-input :dense="true" v-model="filterWord" class="col-md-8 col-xs-11 q-my-lg text-h5">Filter</q-input>
+      <q-card style="cursor: pointer" @click="showRecord(i)" v-for="(i, index) in arrData" :key="index" dark bordered
+              class="card q-ma-xs bg-grey-9 my-card col-md-4 col-xs-11">
         <q-card-section>
           <div class="text-h6">Main word: {{i.mainWord}}</div>
           <div class="text-h7">Result word: {{i.resultWord}}</div>
@@ -73,7 +73,7 @@
     },
 
     methods:{
-    getHistoryData(){
+      getHistoryData(){
       let userData = false;
       //setTimeout(() =>{this.$store.dispatch('getAMRecords').catch(e=>{console.log(e)})}, delay)
       let getData = setInterval(() =>{
@@ -90,6 +90,7 @@
         this.selectedRecord = record;
         this.dialog = true
       },
+
 
 
     },
@@ -142,6 +143,12 @@
 
     },
 
+    watch:{
+      filterWord(){
+        this.$store.dispatch('sortRecords', this.filterWord)
+      }
+    },
+
     mounted(){
       this.getHistoryData();
     }
@@ -149,10 +156,10 @@
 </script>
 
 <style scoped>
- .card{
-
- }
+   .card{
+   }
   .card:hover{
     box-shadow: 0 0 15px rgba(213, 7, 6, 0.79); /* Параметры тени */
   }
+
 </style>
