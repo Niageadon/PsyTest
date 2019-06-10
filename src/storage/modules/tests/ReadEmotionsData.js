@@ -62,7 +62,7 @@ export default {
         throw e;
         //console.log(e)
       }
-    }
+    },
 
   }
 }

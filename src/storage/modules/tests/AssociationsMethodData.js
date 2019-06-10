@@ -12,7 +12,6 @@ export default {
     AMHISTORY: state =>{
       return state.amHistory;
     }
-
   },
 
   mutations: {
@@ -25,16 +24,14 @@ export default {
         let pos = {a:0, b:0};
         pos.a = a.mainWord.toLowerCase().indexOf(payload.toLowerCase());
         pos.b = b.mainWord.toLowerCase().indexOf(payload.toLowerCase());
-        let answer;
-        if(pos.a < pos.b){answer = 1;}
-        else {answer = -1;}
-console.log('a',pos.a);
-console.log('b',pos.b);
+        let answer = 0;
+        if(pos.a === -1) pos.a = a.mainWord.length + 1 ;
+        if(pos.b === -1) pos.b = b.mainWord.length + 1;
+        answer = pos.a - pos.b;
         return answer;
       })
     }
   },
-
 
 
   actions: {

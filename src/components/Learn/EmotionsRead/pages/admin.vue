@@ -71,9 +71,7 @@
         this.$store.dispatch('ReadEmotionsData/getRERecords');
       },
 
-      boba(){
-        console.log(this.$store.getters);
-      }
+
     },
 
     computed:{

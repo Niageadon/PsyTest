@@ -4,10 +4,10 @@
 
     <q-tab-panels v-model="tab" animated>
 
-      <q-tab-panel class="row justify-center q-gutter-md" name="0">
+      <q-tab-panel v-for="(item, index) in records" :key="index" class="row justify-center q-gutter-md" :name="index">
         <q-img
           class="col-md-3 col-xs-11 just"
-          :src="man1">
+          :src="item.url">
         </q-img>
         <q-select class="col-md-3 col-xs-11"  v-model="emotion" :options="options" label="Emotion"></q-select>
         <div class="col-md-1 col-sm-0"></div>
@@ -53,6 +53,18 @@
         console.log(this.tab)
       }
     },
+
+    computed:{
+      records(){
+        return this.$store.getters['ReadEmotionsData/RECORDSS'];
+      },
+
+
+    },
+
+    mounted(){
+      this.$store.dispatch('ReadEmotionsData/getRERecords');
+    }
   }
 </script>
 
